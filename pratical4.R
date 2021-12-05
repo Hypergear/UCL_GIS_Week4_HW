@@ -17,6 +17,6 @@ map <- left_join(shape, report2, by = c("country" = "country"))
 
 
 tmap_mode("plot")
-qtm(map,fill ="diff")
+qtm(map,fill ="diff") 
 
 report2 %>% summary()
