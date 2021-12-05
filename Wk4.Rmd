@@ -24,18 +24,20 @@ library(tmaptools)
 Author cant figure out how to use here package. lol
 
 ```{r}
-report <- read_csv('/Users/jiangzhh98/Downloads/GitHub/UCL_work/GIS/Week4/Gender Inequality Index (GII).csv' , skip = 5,na = "..")
+report <- read_csv('/Users/yun/Documents/CASA/GIS/UCL_GIS_Week4_HW/Gender Inequality Index (GII).csv' , skip = 5,na = "..")
 report <- head(report, -2)
 
 report2 <- report %>% dplyr::select("Country", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019") %>% clean_names() %>% mutate(diff=x2019-x2010)
 
-shape <- st_read('/Users/jiangzhh98/Downloads/GitHub/UCL_work/GIS/Week4/World_Countries_(Generalized)/World_Countries__Generalized_.shp') %>% clean_names()
+shape <- st_read('/Users/yun/Documents/CASA/GIS/UCL_GIS_Week4_HW/World_Countries_(Generalized)/World_Countries__Generalized_.shp') %>% clean_names()
 ```
 
 ## Join data
 
 ```{r}
 map <- left_join(shape, report2, by = c("country" = "country"))
+
+head(report2)
 ```
 
 ## Plot image
@@ -44,5 +46,13 @@ map <- left_join(shape, report2, by = c("country" = "country"))
 tmap_mode("plot")
 qtm(map,fill ="diff")
 ```
+
+```{r}
+tmap_mode("view")
+
+tm_shape(map) + 
+  tm_polygons("x2010")
+```
+
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
